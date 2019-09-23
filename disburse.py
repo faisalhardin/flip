@@ -23,7 +23,6 @@ def get_header():
 def disburse_status(id):
 
     param = 'disburse/'+id
-    
     request = urllib.request.Request(url=BASE_URL+param, headers=get_header())
 
     try:
@@ -48,9 +47,12 @@ def disburse():
 
     request = urllib.request.Request(url=BASE_URL+param, data=data, headers=get_header())
 
-    with urllib.request.urlopen(request) as response:
-        html = json.load(response)
-        print(repr(html))
+    try:
+        with urllib.request.urlopen(request) as response:
+            html = json.load(response)
+            return html
+    except:
+        return None
 
 def update_database(id, status, receipt, time_served):
     #connect to local server and update
