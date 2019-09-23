@@ -7,7 +7,7 @@ if __name__ == '__main__':
         response = flip_lib.disburse_status(_id)
         if response:
             print(response)
-            flip_lib.update_database(
+            flip_lib.update_to_db(
                 response['id'],
                 response['status'],
                 response['receipt'],
