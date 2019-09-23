@@ -27,8 +27,8 @@ def disburse_status(id):
 
     try:
         with urllib.request.urlopen(request) as response:
-            html = json.load(response)
-            return html
+            json_response = json.load(response)
+            return json_response
     except:
         return None
 
@@ -49,8 +49,8 @@ def disburse(bank_code, account_number, amount, remark):
 
     try:
         with urllib.request.urlopen(request) as response:
-            html = json.load(response)
-            return html
+            json_response = json.load(response)
+            return json_response
     except:
         return None
 
