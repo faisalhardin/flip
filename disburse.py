@@ -1,9 +1,11 @@
 import urllib.request, base64, json
 TOKEN = 'HyzioY7LP6ZoO7nTYKbG8O4ISkyWnX1JvAEVAhtWKZumooCzqp41'
 BASE_URL = 'https://nextar.flip.id/'
+AUTHORIZATION = 'SHl6aW9ZN0xQNlpvTzduVFlLYkc4TzRJU2t5V25YMUp2QUVWQWh0V0tadW1vb0N6cXA0MTo='
 
-def disburse():
 
+
+def get_header():
     authentication_param = TOKEN+":"
     bin_auth = authentication_param.encode("utf-8")
     encoded_auth = base64.standard_b64encode(bin_auth)
@@ -16,12 +18,20 @@ def disburse():
         'User-Agent': 'Mozilla/5.0'
     }
 
+    return headers
+
+def disburse_status():
+
     param = 'disburse/1'
     
-    request = urllib.request.Request(url=BASE_URL+param, headers=headers)
+    request = urllib.request.Request(url=BASE_URL+param, headers=get_header())
 
     with urllib.request.urlopen(request) as response:
         html = json.load(response)
         print(repr(html))
 
-disburse()
+# def disburse():
+    
+
+
+disburse_status()
