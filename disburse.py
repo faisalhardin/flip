@@ -32,14 +32,14 @@ def disburse_status(id):
     except:
         return None
 
-def disburse():
+def disburse(bank_code, account_number, amount, remark):
 
     param = 'disburse'
     values = {
-        'bank_code':'118',
-        'account_number':'123456789',
-        'amount':'100000',
-        'remark':'117'
+        'bank_code' : bank_code,
+        'account_number' : account_number,
+        'amount' : amount,
+        'remark' : remark
     }
 
     data = urllib.parse.urlencode(values)
