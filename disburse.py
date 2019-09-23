@@ -1,7 +1,6 @@
-import urllib.request, base64
+import urllib.request, base64, json
 TOKEN = 'HyzioY7LP6ZoO7nTYKbG8O4ISkyWnX1JvAEVAhtWKZumooCzqp41'
 BASE_URL = 'https://nextar.flip.id/'
-AUTHORIZATION = 'SHl6aW9ZN0xQNlpvTzduVFlLYkc4TzRJU2t5V25YMUp2QUVWQWh0V0tadW1vb0N6cXA0MTo='
 
 def disburse():
 
@@ -22,7 +21,7 @@ def disburse():
     request = urllib.request.Request(url=BASE_URL+param, headers=headers)
 
     with urllib.request.urlopen(request) as response:
-        html = response.read()
+        html = json.load(response)
         print(repr(html))
 
 disburse()
