@@ -30,8 +30,23 @@ def disburse_status():
         html = json.load(response)
         print(repr(html))
 
-# def disburse():
+def disburse():
+
+    param = 'disburse'
+    values = {
+        'bank_code':'118',
+        'account_number':'123456789',
+        'amount':'100000',
+        'remark':'117'
+    }
+
+    data = urllib.parse.urlencode(values)
+    data = data.encode('ascii')
+
+    request = urllib.request.Request(url=BASE_URL+param, data=data, headers=get_header())
+
+    with urllib.request.urlopen(request) as response:
+        html = json.load(response)
+        print(repr(html))
     
 
-
-disburse_status()
