@@ -48,5 +48,10 @@ def disburse():
     with urllib.request.urlopen(request) as response:
         html = json.load(response)
         print(repr(html))
+
+def update_database(id, status, receipt, time_served):
+    #connect to local server and update
+    pass
+
     
 
