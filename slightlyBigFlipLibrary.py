@@ -50,13 +50,20 @@ def disburse(bank_code, account_number, amount, remark):
     try:
         with urllib.request.urlopen(request) as response:
             json_response = json.load(response)
+            # print(json_response)
             return json_response
     except:
         return None
 
+def add_to_db(id, status, receipt, time_served):
+    pass
+
 def update_database(id, status, receipt, time_served):
     #connect to local server and update
     pass
+
+
+disburse_status('1')
 
     
 
