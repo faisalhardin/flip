@@ -1,9 +1,43 @@
 import urllib.request, base64, json
+import sqlite3
+from sqlite3 import Error
 TOKEN = 'HyzioY7LP6ZoO7nTYKbG8O4ISkyWnX1JvAEVAhtWKZumooCzqp41'
 BASE_URL = 'https://nextar.flip.id/'
 AUTHORIZATION = 'SHl6aW9ZN0xQNlpvTzduVFlLYkc4TzRJU2t5V25YMUp2QUVWQWh0V0tadW1vb0N6cXA0MTo='
+	 
+ 
+def create_connection(db_file):
+    """ create a database connection to a SQLite database """
+    conn = None
+    try:
+        conn = sqlite3.connect(db_f3ile)
+        print(sqlite3.version)
+    except Error as e:
+        print(e)
+    finally:
+        if conn:
+            conn.close()
+    
+    return conn
 
+def create_table(conn):
+    sql_create_bank_table = """ CREATE TABLE IF NOT EXISTS bank (
+                                        id integer PRIMARY KEY,
+                                        status text NOT NULL,
+                                        timestamp text,
+                                        bank_code text,
+                                        account_number text,
+                                        beneficiary_name text,
+                                        remark text,
+                                        receipt text,
+                                        fee integer,
+                                        time_served text
+                                    ); """
 
+    if conn is not None:
+        create_table(conn, sql_create_bank_table)
+    else:
+        print("Error! cannot create the database connection.")
 
 def get_header():
     authentication_param = TOKEN+":"
@@ -58,12 +92,9 @@ def disburse(bank_code, account_number, amount, remark):
 def add_to_db(id, status, receipt, time_served):
     pass
 
-def update_database(id, status, receipt, time_served):
+def update_to_db(id, status, receipt, time_served):
     #connect to local server and update
     pass
 
 
 disburse_status('1')
-
-    
-
