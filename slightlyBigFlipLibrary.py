@@ -20,6 +20,7 @@ def create_connection(db_path):
 def create_table(conn):
     sql_create_bank_table = """ CREATE TABLE IF NOT EXISTS bank (
                                         id integer PRIMARY KEY,
+                                        transaction_id integer,
                                         amount integer,
                                         status text NOT NULL,
                                         timestamp text,
@@ -95,15 +96,22 @@ def disburse(bank_code, account_number, amount, remark):
 def add_to_db(conn, response):
 
     params = tuple(response)
-    sql = ''' INSERT INTO bank(amount, status, timestamp, bank_code, account_number, beneficiary_name, remark, receipt, time_served, fee)
-              VALUES(?,?,?,?,?,?,?,?,?,?) '''
+    sql = ''' INSERT INTO bank(transaction_id, amount, status, timestamp, bank_code, account_number, beneficiary_name, remark, receipt, time_served, fee)
+              VALUES(?,?,?,?,?,?,?,?,?,?,?) '''
     cur = conn.cursor()
     cur.execute(sql, params)
     return cur.lastrowid
 
-def update_to_db(id, status, receipt, time_served):
-    #connect to local server and update
-    pass
+def update_to_db(conn, id, status, receipt, time_served):
+    params = (status, receipt, time_served, id)
+    sql = ''' UPDATE bank
+              SET status = ? ,
+                  receipt = ? ,
+                  time_served = ?
+              WHERE transaction_id = ?'''
+    cur = conn.cursor()
+    cur.execute(sql, params)
+    return conn.commit()
 
 
 disburse_status('1')
