@@ -13,7 +13,6 @@ if __name__ == '__main__':
         if response:
             response['amount'] = int(response['amount'])
             response['fee'] = int(response['fee'])
-            response.pop('id')
             db_response = flip_lib.add_to_db(conn, response)
             print("db_response ", db_response)
         else:
