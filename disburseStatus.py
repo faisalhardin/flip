@@ -1,6 +1,7 @@
 import sys
 import slightlyBigFlipLibrary as flip_lib
 
+
 if __name__ == '__main__':
     conn = flip_lib.create_connection('./bank.db')
     flip_lib.create_table(conn)
@@ -9,7 +10,7 @@ if __name__ == '__main__':
         _, _id = sys.argv
         response = flip_lib.disburse_status(_id)
         if response:
-            # print(response)
+            print(response)
             flip_lib.update_to_db(
                 conn,
                 response['id'],

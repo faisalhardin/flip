@@ -94,12 +94,13 @@ def disburse(bank_code, account_number, amount, remark):
         return None
 
 def add_to_db(conn, response):
-
-    params = tuple(response)
+    params = tuple(response.values())
+    # print(params)
     sql = ''' INSERT INTO bank(transaction_id, amount, status, timestamp, bank_code, account_number, beneficiary_name, remark, receipt, time_served, fee)
               VALUES(?,?,?,?,?,?,?,?,?,?,?) '''
     cur = conn.cursor()
     cur.execute(sql, params)
+    conn.commit()
     return cur.lastrowid
 
 def update_to_db(conn, id, status, receipt, time_served):
