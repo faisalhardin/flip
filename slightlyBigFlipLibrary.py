@@ -6,11 +6,11 @@ BASE_URL = 'https://nextar.flip.id/'
 AUTHORIZATION = 'SHl6aW9ZN0xQNlpvTzduVFlLYkc4TzRJU2t5V25YMUp2QUVWQWh0V0tadW1vb0N6cXA0MTo='
 	 
  
-def create_connection(db_file):
+def create_connection():
     """ create a database connection to a SQLite database """
     conn = None
     try:
-        conn = sqlite3.connect(db_f3ile)
+        conn = sqlite3.connect()
         print(sqlite3.version)
     except Error as e:
         print(e)
@@ -23,16 +23,19 @@ def create_connection(db_file):
 def create_table(conn):
     sql_create_bank_table = """ CREATE TABLE IF NOT EXISTS bank (
                                         id integer PRIMARY KEY,
+                                        amount integer,
                                         status text NOT NULL,
                                         timestamp text,
                                         bank_code text,
-                                        account_number text,
+                                        account_number varchar(20),
                                         beneficiary_name text,
                                         remark text,
                                         receipt text,
-                                        fee integer,
-                                        time_served text
+                                        time_served text,
+                                        fee integer
                                     ); """
+
+                                    amount, status, timestamp, bank_code, account_number, beneficiary_name, remark, receipt, time_served, fee
 
     if conn is not None:
         create_table(conn, sql_create_bank_table)
@@ -89,8 +92,14 @@ def disburse(bank_code, account_number, amount, remark):
     except:
         return None
 
-def add_to_db(id, status, receipt, time_served):
-    pass
+def add_to_db(conn, response):
+
+    params = tuple(response)
+    sql = ''' INSERT INTO bank(amount, status, timestamp, bank_code, account_number, beneficiary_name, remark, receipt, time_served, fee)
+              VALUES(?,?,?,?,?,?,?,?,?,?) '''
+    cur = conn.cursor()
+    cur.execute(sql, params)
+    return cur.lastrowid
 
 def update_to_db(id, status, receipt, time_served):
     #connect to local server and update
