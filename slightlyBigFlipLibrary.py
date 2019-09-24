@@ -6,17 +6,14 @@ BASE_URL = 'https://nextar.flip.id/'
 AUTHORIZATION = 'SHl6aW9ZN0xQNlpvTzduVFlLYkc4TzRJU2t5V25YMUp2QUVWQWh0V0tadW1vb0N6cXA0MTo='
 	 
  
-def create_connection():
+def create_connection(db_path):
     """ create a database connection to a SQLite database """
     conn = None
     try:
-        conn = sqlite3.connect()
+        conn = sqlite3.connect(db_path)
         print(sqlite3.version)
     except Error as e:
         print(e)
-    finally:
-        if conn:
-            conn.close()
     
     return conn
 
@@ -33,12 +30,15 @@ def create_table(conn):
                                         receipt text,
                                         time_served text,
                                         fee integer
-                                    ); """
+                                        ); """
 
-                                    amount, status, timestamp, bank_code, account_number, beneficiary_name, remark, receipt, time_served, fee
 
     if conn is not None:
-        create_table(conn, sql_create_bank_table)
+        try:
+            c = conn.cursor()
+            c.execute(sql_create_bank_table)
+        except Error as e:
+            print(e)
     else:
         print("Error! cannot create the database connection.")
 
