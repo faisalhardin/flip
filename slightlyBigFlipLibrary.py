@@ -3,7 +3,6 @@ import sqlite3
 from sqlite3 import Error
 TOKEN = 'HyzioY7LP6ZoO7nTYKbG8O4ISkyWnX1JvAEVAhtWKZumooCzqp41'
 BASE_URL = 'https://nextar.flip.id/'
-AUTHORIZATION = 'SHl6aW9ZN0xQNlpvTzduVFlLYkc4TzRJU2t5V25YMUp2QUVWQWh0V0tadW1vb0N6cXA0MTo='
 	 
  
 def create_connection(db_path):
@@ -32,7 +31,6 @@ def create_table(conn):
                                         time_served text,
                                         fee integer
                                         ); """
-
 
     if conn is not None:
         try:
@@ -113,6 +111,3 @@ def update_to_db(conn, id, status, receipt, time_served):
     cur = conn.cursor()
     cur.execute(sql, params)
     return conn.commit()
-
-
-disburse_status('1')
